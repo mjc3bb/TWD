@@ -34,7 +34,7 @@
 
             {% for page in pages %}
                 <li>
-                    <a href="{{ page.url }}">{{ page.title }}({{ page.views }})</a>
+                    <a href="{{ page.url }}">{{ page.title }} ({{ page.views }})</a>
                 </li>
             {% endfor %}
         </ul>
@@ -43,6 +43,7 @@
         {% endif %}
     </div><br/>
     <div>
+        <a href="/rango/add_category/">Add a new Category</a><br/>
         <a href="/rango/about/">About</a><br/>
         <img src="{% static 'images/rango.jpg' %}"
              alt = "Picture of Rango"
