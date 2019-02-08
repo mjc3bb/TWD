@@ -6,7 +6,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'tango_with_django_project.settings')
 import django
 django.setup()
-from rango.models import Category, Page
+from rango.models import Category, Page, User, UserProfile
 
 def populate():
     python_pages = [
@@ -46,10 +46,15 @@ def populate():
             "Django": {"pages": django_pages,"views": 64, "likes": 32},
             "Other Frameworks": {"pages": other_pages,"views": 32, "likes": 16}}
 
+    test_users = {"User1":{"username":"testuser2","email":"test@email.com","password":"testing" }}
+
     for cat, cat_data, in cats.items():
         c = add_cat(cat, cat_data['views'], cat_data['likes'])
         for p in cat_data["pages"]:
             add_page(c, p["title"], p["url"],p['views'])
+
+    for usr, usr_data in test_users.items():
+        add_userprofile(usr_data['username'],usr_data['email'],usr_data['password'], "http://www.url.com", None)
 
 
 def add_page(cat, title, url, views=0):
@@ -64,6 +69,14 @@ def add_cat(name, views, likes):
     c = Category.objects.get_or_create(name=name,views=views,likes=likes)[0]
     c.save()
     return c
+
+
+def add_userprofile(username, email, password,website,picture=None):
+    user = User.objects.create_user(username=username, email=email, password=password)
+    #user.save()
+    user_profile = UserProfile.objects.get_or_create(website=website,picture=picture)[0]
+    user_profile.save()
+    return user_profile
 
 
 if __name__ == '__main__':

@@ -1,0 +1,11 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    Restricted
+{% endblock %}
+
+{% block body_block %}
+    This page is restricted, but you can see it because you're logged in!
+    <br/>
+    <img src="{% static 'images/rango.jpg' %}" style="width:25%">
+{% endblock %}

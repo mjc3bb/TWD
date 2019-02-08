@@ -1,8 +1,17 @@
 {% extends 'rango/base.html' %}
-{% load static %}
+{% load staticfiles %}
 {% block body_block %}
     <div>Rango says here is the about page</div>
     <div>This tutorial has been put together by Michael</div>
-    <img src="{% static 'images/about-rango.png' %}">
-    <img src="{{ MEDIA_URL }}cat.jpg" style="width:25%">
+    <div>This webpage has been visited {{ visits }} times.</div>
+    <img src="{% static 'images/about-rango.png' %}" style="width:20%;"><br/>
+    <img src="{{ MEDIA_URL }}cat.jpg" style="width:20%"><br/>
+    <button onclick="alert('You clicked the button inline.');">
+    Click Me - I'm inline
+    </button>
+    <button class="btn btn-primary" id="about-btn">Click Me - I'm javascript</button>
+    <br/>
+    <p>This is a example</p>
+    <p>This is another example</p>
+    <div id="msg">Hello - I'm here for a JQuery Example too</div>
 {% endblock %}

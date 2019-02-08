@@ -3,19 +3,23 @@
 {% block body_block %}
     <h1>Rango says...</h1>
     <div>
-        <div>hey there partner!</div>
+        {% if user.is_authenticated %}
+            howdy {{ user.username }}!
+        {% else %}
+            <div>hey there partner!</div>
+        {% endif %}
     </div>
     <h1>Most Liked Categories</h1>
     <div>
         {% if categories %}
-        <ul>
+            <ul>
 
-            {% for category in categories %}
-                <li>
-                    <a href="{% url 'show_category' category.slug %}">{{ category.name }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+                {% for category in categories %}
+                    <li>
+                        <a href="{% url 'show_category' category.slug %}">{{ category.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
         {% else %}
             <strong>There are no categories present.</strong>
         {% endif %}
@@ -24,22 +28,22 @@
     <h1>Most Viewed Pages</h1>
     <div>
         {% if pages %}
-        <ul>
+            <ul>
 
-            {% for page in pages %}
-                <li>
-                    <a href="{{ page.url }}">{{ page.title }} ({{ page.views }})</a>
-                </li>
-            {% endfor %}
-        </ul>
+                {% for page in pages %}
+                    <li>
+                        <a href="{{ page.url }}">{{ page.title }} ({{ page.views }})</a>
+                    </li>
+                {% endfor %}
+            </ul>
         {% else %}
             <strong>There are no pages present.</strong>
         {% endif %}
     </div><br/>
     <div>
         <img src="{% static 'images/rango.jpg' %}"
-             alt = "Picture of Rango"
-             style = "width:25%"
+             alt="Picture of Rango"
+             style="width:25%"
         />
     </div>
 {% endblock %}

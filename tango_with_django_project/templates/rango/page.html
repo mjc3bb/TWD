@@ -1,0 +1,14 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+    <h1>{{ title }}</h1>
+    <div>
+        <p>Views: {{ views }}</p>
+        <a href="{{ url }}">View page</a>
+    </div>
+{% endblock %}
+
+{% block title_block %}
+    {{ title }}
+{% endblock %}
