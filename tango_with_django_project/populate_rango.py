@@ -6,8 +6,9 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'tango_with_django_project.settings')
 import django
 django.setup()
-from rango.models import Category, WebLink as Page, User, UserProfile
-
+from rango.models import Category, WebLink, User, UserProfile, WebLinkPage
+from wagtail.core.models import Page
+from django.utils.text import slugify
 def populate():
     python_pages = [
         {"title": "Official Python Tutorial",
@@ -52,15 +53,24 @@ def populate():
     for cat, cat_data, in cats.items():
         c = add_cat(cat, cat_data['views'], cat_data['likes'])
         for p in cat_data["pages"]:
-            add_page(c, p["title"], p["url"],p['views'])
+            add_wpage(c, p["title"], p["url"],p['views'])
 
     for usr, usr_data in test_users.items():
         add_userprofile(usr_data['username'],usr_data['email'],usr_data['password'], "http://www.url.com", None)
 
 
 def add_page(cat, title, url, views=0):
-    p = Page.objects.get_or_create(category=cat, title=title)[0]
+    p = WebLink.objects.get_or_create(category=cat, title=title)[0]
     p.url=url
+    p.views = views
+    p.save()
+    return p
+
+def add_wpage(cat, title, url, views=0):
+    parent = Page.objects.get(title='Root')
+    p = WebLinkPage(category=cat, title=title)
+    parent.add_child(instance=p)
+    p.link = url
     p.views = views
     p.save()
     return p

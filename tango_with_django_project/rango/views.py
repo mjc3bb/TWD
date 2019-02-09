@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
-from .models import Category, WebLink ##User, UserProfile
+from .models import Category, WebLink, WebLinkPage
 from .forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -54,6 +54,15 @@ def show_page(request, page_id):
         context_dict['views'] = None
         context_dict['category'] = None
     return render(request, 'rango/page.html', context_dict)
+
+def show_wpage(request, page_id):
+    context_dict={}
+    try:
+        page = WebLinkPage.objects.get(pk=page_id)
+        context_dict['page'] = page
+    except WebLinkPage.DoesNotExist:
+        context_dict['page']=None
+    return render(request, 'rango/web_link_page.html', context_dict)
 
 @login_required
 def add_category(request):
