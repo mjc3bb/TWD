@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Page, UserProfile
+from .models import Category, WebLink, UserProfile, WebLinkPage
 # Register your models here.
 
 
@@ -13,6 +13,7 @@ class PageAdmin(admin.ModelAdmin):
     search_fields = ['title', 'url']
 
 
-admin.site.register(Page, PageAdmin)
+admin.site.register(WebLink, PageAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(UserProfile)
+admin.site.register(WebLinkPage)

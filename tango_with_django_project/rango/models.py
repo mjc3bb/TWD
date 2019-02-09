@@ -1,6 +1,9 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from wagtail.core.models import Page
+from wagtail.core.fields import RichTextField
+from wagtail.admin.edit_handlers import FieldPanel
 # Create your models here.
 
 
@@ -21,7 +24,7 @@ class Category(models.Model):
         return self.name
 
 
-class Page(models.Model):
+class WebLink(models.Model):
     category = models.ForeignKey(Category, on_delete='CASCADE')
     title = models.CharField(max_length=128)
     url = models.URLField()
@@ -39,3 +42,20 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class HomePage(Page):
+    body = RichTextField(blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('body', classname="full"),
+    ]
+
+
+class WebLinkPage(Page):
+    category = models.ForeignKey(Category, on_delete='CASCADE',null=True)
+    body = RichTextField(blank=True)
+    link = models.URLField(blank=True)
+    views = models.IntegerField(default=0)
+    content_panels = Page.content_panels +[FieldPanel('link', classname="full"),
+                                           FieldPanel('category',  classname="full")]

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Page, Category, UserProfile
+from .models import WebLink, Category, UserProfile
 from django.contrib.auth.models import User
 
 
@@ -23,7 +23,7 @@ class PageForm(forms.ModelForm):
     views = forms.IntegerField(widget=forms.HiddenInput(),initial=0)
 
     class Meta:
-        model = Page
+        model = WebLink
 
         exclude = ('category',)
 

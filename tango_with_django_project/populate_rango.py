@@ -6,7 +6,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'tango_with_django_project.settings')
 import django
 django.setup()
-from rango.models import Category, Page, User, UserProfile
+from rango.models import Category, WebLink as Page, User, UserProfile
 
 def populate():
     python_pages = [
@@ -44,7 +44,8 @@ def populate():
 
     cats = {"Python": {"pages": python_pages,"views": 128, "likes": 64},
             "Django": {"pages": django_pages,"views": 64, "likes": 32},
-            "Other Frameworks": {"pages": other_pages,"views": 32, "likes": 16}}
+            "Other Frameworks": {"pages": other_pages,"views": 32, "likes": 16},
+            "No Category": {"pages":{},"views":300,"likes":20}}
 
     test_users = {"User1":{"username":"testuser2","email":"test@email.com","password":"testing" }}
 
@@ -66,16 +67,22 @@ def add_page(cat, title, url, views=0):
 
 
 def add_cat(name, views, likes):
-    c = Category.objects.get_or_create(name=name,views=views,likes=likes)[0]
-    c.save()
+    try:
+        c = Category.objects.get_or_create(name=name,views=views,likes=likes)[0]
+        c.save()
+    except django.db.utils.IntegrityError:
+        c=None
     return c
 
 
 def add_userprofile(username, email, password,website,picture=None):
-    user = User.objects.create_user(username=username, email=email, password=password)
-    #user.save()
-    user_profile = UserProfile.objects.get_or_create(website=website,picture=picture)[0]
-    user_profile.save()
+    try:
+        user = User.objects.create_user(username=username, email=email, password=password)
+        #user.save()
+        user_profile = UserProfile.objects.get_or_create(website=website,picture=picture)[0]
+        user_profile.save()
+    except django.db.utils.IntegrityError:
+        user_profile=None
     return user_profile
 
 
