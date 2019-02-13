@@ -9,7 +9,7 @@ from datetime import datetime
 
 def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
-    pages_list = WebLink.objects.order_by('-views')[:5]
+    pages_list = WebLinkPage.objects.order_by('-views')[:5]
     context_dict = {'categories': category_list,
                     'pages': pages_list}
 
