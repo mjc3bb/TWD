@@ -27,7 +27,7 @@ class Category(models.Model):
 
 
 class WebLink(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT,null=True, default=Category.objects.get_or_create(name='No Category')[0])
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL,null=True)
     title = models.CharField(max_length=128)
     url = models.URLField()
     views = models.IntegerField(default=0)
@@ -45,19 +45,3 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-
-class HomePage(Page):
-    body = RichTextField(blank=True)
-
-    content_panels = Page.content_panels + [
-        FieldPanel('body', classname="full"),
-    ]
-
-
-class WebLinkPage(Page):
-    category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT,null=True, default=Category.objects.get_or_create(name='No Category')[0])
-    body = RichTextField(blank=True)
-    link = models.URLField(blank=True)
-    views = models.IntegerField(default=0)
-    content_panels = Page.content_panels +[FieldPanel('link', classname="full"),
-                                           SnippetChooserPanel('category',  classname="full")]

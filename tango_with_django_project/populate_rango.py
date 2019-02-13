@@ -6,7 +6,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'tango_with_django_project.settings')
 import django
 django.setup()
-from rango.models import Category, WebLink, User, UserProfile, WebLinkPage
+from rango.models import Category, WebLink, User, UserProfile
+from rango_wagtail.models import WebLinkPage
 from wagtail.core.models import Page
 from django.utils.text import slugify
 def populate():
@@ -65,6 +66,7 @@ def add_page(cat, title, url, views=0):
     p.views = views
     p.save()
     return p
+
 
 def add_wpage(cat, title, url, views=0):
     parent = Page.objects.get(title='Root')

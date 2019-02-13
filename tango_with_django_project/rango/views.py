@@ -1,11 +1,11 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
-from .models import Category, WebLink, WebLinkPage
+from .models import Category, WebLink
 from .forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from datetime import datetime
-
+from rango_wagtail.models import WebLinkPage
 
 def index(request):
     category_list = Category.objects.order_by('-likes')[:5]

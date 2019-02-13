@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, WebLink, UserProfile, WebLinkPage
+from .models import Category, WebLink, UserProfile
 # Register your models here.
 
 
@@ -16,4 +16,3 @@ class PageAdmin(admin.ModelAdmin):
 admin.site.register(WebLink, PageAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(UserProfile)
-admin.site.register(WebLinkPage)
